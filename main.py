@@ -7,7 +7,11 @@ from starlette.responses import RedirectResponse
 
 # system files
 from shutil import os, rmtree
+# OCR Google Engine
+import pytesseract as tess
+from PIL import Image
 
+# Global variables
 DOT = '.'
 DIR_FILES_PATH = './files/'
 
@@ -18,6 +22,14 @@ app = FastAPI()
 def create_file(full_path, filename, content): # content: byte encoded
     with open(full_path + '/' + filename, 'wb') as f:
         f.write(content)
+
+def transcript_photo(source_file: str):
+    #pass
+    my_image = Image.open(source_file)
+    text = tess.image_to_string(my_image)
+    byte_encoded_content = bytes(text, 'utf-8')
+
+    return byte_encoded_content
 
 def delete_saved_files():
     files = os.listdir(DIR_FILES_PATH)
@@ -44,7 +56,6 @@ async def fileslist(request: Request):
         for file in files:
             if file.find(DOT) != -1:
                 lista += file.split(DOT)
-            #filenames_and_formats.append(file.split(DOT))
         filenames_and_formats.append(lista)
 
     print(f'filenames_and_formats: {filenames_and_formats}')
@@ -62,11 +73,19 @@ async def create_upload_file(file: UploadFile):
         os.mkdir(full_path)
         create_file(full_path, filename, content)
 
-        if file_format == 'jpg' and file_format == 'png': # file_format.lower()
-            #transcription_content = transcript_photo(content)
-            #transcription_filename = name + '.txt'
-            #create_file(full_path, transcription_filename, transcription_content)
-            pass
+        if file_format == 'jpg' or file_format == 'png': # file_format.lower()
+            print("###########################################")
+            print(f'file_format: {file_format}')
+            print("###########################################")
+            source_file = full_path + '/' + filename
+            transcription_content = transcript_photo(source_file)
+            transcription_filename = name + '.txt'
+            create_file(full_path, transcription_filename, transcription_content)
+            #pass
+        else:
+            print("###########################################")
+            print(f'ELSE!!!!!!!!!')
+            print("###########################################")
 
     return RedirectResponse(url='/filelist', status_code=status.HTTP_301_MOVED_PERMANENTLY) # status.HTTP_307_TEMPORARY_REDIRECT
 
