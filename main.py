@@ -71,7 +71,7 @@ async def create_upload_file(file: UploadFile):
         except:
             create_file(full_path, filename, content)
 
-        if file_format == 'jpg' or file_format == 'png':
+        if file_format == 'jpg' or file_format == 'png' or file_format == 'jpeg':
             source_file = full_path + '/' + filename
             transcription_content = transcript_photo(source_file)
             transcription_filename = name + '.txt'
