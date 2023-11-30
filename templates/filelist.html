@@ -12,41 +12,50 @@
         Lista de Archivos
     </h1>
     <div>
-        <ul>
-            {% if files != [] %}
-                {% for file in files %}
-                    <li>
-                        archivo de entrada: 
-                        <a href="{{ dir_files_path }}{{file}}" download>
-                            {{ file }}</li>
-                        </a>
-                    </li>
-                    <li>
-                        archivo de salida: 
-                        <a href="{{ dir_files_path }}{{file}}" download>
-                            {{ file }}</li>
-                        </a>
-                    </li>
-                    <br />
-                    <hr />
-                {% endfor %}
-            {% else %}
-                <li> No hay archivos.</li>
-            {% endif %}
+        {% if filenames_and_formats != [] %}
+            {% for filename_format in filenames_and_formats %}
+            <ul>
+                <li>
+                    {% if filename_format[1] == 'txt' %}
+                        {{filename_format[0]}}.{{filename_format[3]}}: 
+                        <a href="{{dir_source_files_path}}{{filename_format[0]}}.{{filename_format[3]}}">view source</a>
+                        <span> | </span>
+                        <a href="{{dir_source_files_path}}{{filename_format[2]}}.{{filename_format[1]}}">view transciption</a>
+                    {% elif filename_format[3] == 'txt' %}
+                        {{filename_format[0]}}.{{filename_format[1]}}: 
+                        <a href="{{dir_source_files_path}}{{filename_format[0]}}.{{filename_format[1]}}">view source</a>
+                        <span> | </span>
+                        <a href="{{dir_source_files_path}}{{filename_format[2]}}.{{filename_format[3]}}">view transciption</a>
+
+                    {% else %}
+                        {{filename_format[0]}}.{{filename_format[1]}}: 
+                        <a href="{{dir_source_files_path}}{{filename_format[0]}}.{{filename_format[1]}}">view source</a>
+                    {% endif %}
+                </li>
             </ul>
+
+            {% endfor %}
+        {% else %}
+        <ul>
+            <li> No hay archivos.</li>
+        {% endif %}
+        </ul>
     </div>
+    <hr />
 
     <br />
 
-    {% if files != [] %}
-    <div>
+    <footer>
+        {% if filenames_format_pairs != [] %}
+        <div>
         <a href="/delete_files">Limpiar archivos</a>
-    </div>
-    <br />
-    {% endif %}
-
-    <div>
-        <a href="/">Ir a inicio</a>
-    </div>
+        </div>
+        <br />
+        {% endif %}
+        
+        <div>
+            <a href="/">Ir a inicio</a>
+        </div>
+    </footer>
 </body>
 </html>
