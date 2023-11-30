@@ -65,8 +65,11 @@ async def create_upload_file(file: UploadFile):
         name, file_format = filename.split(DOT)
 
         full_path = DIR_FILES_PATH + name
-        os.mkdir(full_path)
-        create_file(full_path, filename, content)
+        try:
+            os.mkdir(full_path)
+            create_file(full_path, filename, content)
+        except:
+            create_file(full_path, filename, content)
 
         if file_format == 'jpg' or file_format == 'png':
             source_file = full_path + '/' + filename
