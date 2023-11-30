@@ -18,18 +18,18 @@
                 <li>
                     {% if filename_format[1] == 'txt' %}
                         {{filename_format[0]}}.{{filename_format[3]}}: 
-                        <a href="{{dir_source_files_path}}{{filename_format[0]}}.{{filename_format[3]}}">view source</a>
+                        <a href="{{dir_source_files_path}}{{filename_format[0]}}.{{filename_format[3]}}" target="_blank">view source</a>
                         <span> | </span>
-                        <a href="{{dir_source_files_path}}{{filename_format[2]}}.{{filename_format[1]}}">view transciption</a>
+                        <a href="{{dir_source_files_path}}{{filename_format[2]}}.{{filename_format[1]}}" target="_blank">view transciption</a>
                     {% elif filename_format[3] == 'txt' %}
                         {{filename_format[0]}}.{{filename_format[1]}}: 
-                        <a href="{{dir_source_files_path}}{{filename_format[0]}}.{{filename_format[1]}}">view source</a>
+                        <a href="{{dir_source_files_path}}{{filename_format[0]}}.{{filename_format[1]}}" target="_blank">view source</a>
                         <span> | </span>
-                        <a href="{{dir_source_files_path}}{{filename_format[2]}}.{{filename_format[3]}}">view transciption</a>
+                        <a href="{{dir_source_files_path}}{{filename_format[2]}}.{{filename_format[3]}}" target="_blank">view transciption</a>
 
                     {% else %}
                         {{filename_format[0]}}.{{filename_format[1]}}: 
-                        <a href="{{dir_source_files_path}}{{filename_format[0]}}.{{filename_format[1]}}">view source</a>
+                        <a href="{{dir_source_files_path}}{{filename_format[0]}}.{{filename_format[1]}}" target="_blank">view source</a>
                     {% endif %}
                 </li>
             </ul>
