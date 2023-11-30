@@ -24,7 +24,6 @@ def create_file(full_path, filename, content): # content: byte encoded
         f.write(content)
 
 def transcript_photo(source_file: str):
-    #pass
     my_image = Image.open(source_file)
     text = tess.image_to_string(my_image)
     byte_encoded_content = bytes(text, 'utf-8')
@@ -36,9 +35,6 @@ def delete_saved_files():
     if files != list():
         for file in files:
             rmtree(DIR_FILES_PATH + file)
-        print(f'all files were removed')
-    else:
-        print(f'there is no files')
 
 @app.get('/', response_class=HTMLResponse)
 async def root(request: Request):
@@ -58,7 +54,6 @@ async def fileslist(request: Request):
                 lista += file.split(DOT)
         filenames_and_formats.append(lista)
 
-    print(f'filenames_and_formats: {filenames_and_formats}')
     return templates.TemplateResponse('filelist.html', context={'request': request, 'dir_source_files_path': DIR_FILES_PATH, 'filenames_and_formats': filenames_and_formats})
 
 @app.post('/uploadfile/')
@@ -73,21 +68,13 @@ async def create_upload_file(file: UploadFile):
         os.mkdir(full_path)
         create_file(full_path, filename, content)
 
-        if file_format == 'jpg' or file_format == 'png': # file_format.lower()
-            print("###########################################")
-            print(f'file_format: {file_format}')
-            print("###########################################")
+        if file_format == 'jpg' or file_format == 'png':
             source_file = full_path + '/' + filename
             transcription_content = transcript_photo(source_file)
             transcription_filename = name + '.txt'
             create_file(full_path, transcription_filename, transcription_content)
-            #pass
-        else:
-            print("###########################################")
-            print(f'ELSE!!!!!!!!!')
-            print("###########################################")
 
-    return RedirectResponse(url='/filelist', status_code=status.HTTP_301_MOVED_PERMANENTLY) # status.HTTP_307_TEMPORARY_REDIRECT
+    return RedirectResponse(url='/filelist', status_code=status.HTTP_301_MOVED_PERMANENTLY)
 
 @app.get('/files/{filename}')
 async def get_file(filename: str):
