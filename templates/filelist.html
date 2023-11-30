@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File List</title>
+</head>
+<body>
+    <br>
+    
+    <h1>
+        Lista de Archivos
+    </h1>
+    <div>
+        <ul>
+            {% if files != [] %}
+                {% for file in files %}
+                    <li>
+                        archivo de entrada: 
+                        <a href="{{ dir_files_path }}{{file}}" download>
+                            {{ file }}</li>
+                        </a>
+                    </li>
+                    <li>
+                        archivo de salida: 
+                        <a href="{{ dir_files_path }}{{file}}" download>
+                            {{ file }}</li>
+                        </a>
+                    </li>
+                    <br />
+                    <hr />
+                {% endfor %}
+            {% else %}
+                <li> No hay archivos.</li>
+            {% endif %}
+            </ul>
+    </div>
+
+    <br />
+
+    {% if files != [] %}
+    <div>
+        <a href="/delete_files">Limpiar archivos</a>
+    </div>
+    <br />
+    {% endif %}
+
+    <div>
+        <a href="/">Ir a inicio</a>
+    </div>
+</body>
+</html>

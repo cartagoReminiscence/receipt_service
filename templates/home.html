@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt Service</title>
+</head>
+<body>
+    <script>
+        const handleUpload = (e) => {
+            e.preventDefault();
+
+            let fileInput = document.getElementById('fileInput');
+
+            const apiUrl = "/uploadfile/";
+            const request = {
+                method: 'POST',
+                body: file,
+            };
+
+            fetch(apiUrl, request)
+                .then((response)=> {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error({ response: 'false'});
+                    }
+                })
+                .then((data) => {
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error({ error });
+                })
+        };
+    </script>
+    <h1>Receipt Service</h1>
+    <hr />
+    <br />
+
+    <!-- <form onsubmit="handleUpload(event)" method="post" enctype="multipart/form-data"> -->
+        <!-- <form action="/uploadfile/" method="post" enctype="multipart/form-data"> -->
+        <form>
+        <label>¿Qué archivo deseas cargar?: </label>
+        <input id="fileInput" name="file" type="file" />
+        <br />
+        <br />
+        <button onclick="handleUpload()">Subir archivo</button>
+    </form>
+    
+    <br />
+    <div>
+        <a href="/filelist">Lista de archivos</a>
+    </div>
+</body>
+</html>
